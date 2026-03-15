@@ -1,0 +1,31 @@
+ACM_COMPETITION_TEMPLATE/
+
+# Common build outputs
+**/build/
+**/bin/
+**/obj/
+**/Debug/
+**/Release/
+
+# Windows and Visual Studio
+**/.vs/
+**/*.exe
+**/*.pdb
+**/*.ilk
+**/*.obj
+**/*.idb
+**/*.suo
+**/*.user
+**/*.VC.db
+**/*.opendb
+
+# CMake and Qt generated files
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/Testing/
+**/*_autogen/
+**/.qmake.stash
+
+# Logs
+**/*.log

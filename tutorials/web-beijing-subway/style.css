@@ -1,0 +1,569 @@
+:root {
+    /* 颜色变量定义 */
+    --primary-color: #2c3e50; /* 主色调 */
+    --accent-color: #3498db;  /* 强调色 */
+    --success-color: #27ae60; /* 成功/起点颜色 */
+    --bg-color: #f4f6f8;      /* 背景色 */
+    --panel-bg: #ffffff;      /* 面板背景色 */
+    --text-color: #333333;    /* 文本颜色 */
+    --border-color: #e0e0e0;  /* 边框颜色 */
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}
+
+/* 页面主体样式 */
+body {
+    font-family: 'SimHei', 'Microsoft YaHei', sans-serif; /* 使用黑体 */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* 标题样式 */
+h1 {
+    color: var(--primary-color);
+    margin: 0 0 20px 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* 控制面板区域 */
+.controls {
+    background: var(--panel-bg);
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+/* 状态面板（起点/终点显示） */
+.status-panel {
+    display: flex;
+    gap: 30px;
+}
+
+/* 单个状态项 */
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 标签文本 */
+.label {
+    font-weight: 600;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+/* 状态值显示框 */
+.value {
+    background: #ecf0f1;
+    padding: 6px 12px;
+    border-radius: 4px;
+    min-width: 100px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+/* 按钮组 */
+.button-group {
+    display: flex;
+    gap: 15px;
+}
+
+/* 通用按钮样式 */
+button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    font-family: 'SimHei', 'Microsoft YaHei', sans-serif;
+}
+
+/* 运行/查询按钮 */
+.btn-run {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* 运行按钮悬停效果 */
+.btn-run:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+/* 重置按钮 */
+.btn-reset {
+    background-color: #95a5a6;
+    color: white;
+}
+
+/* 重置按钮悬停效果 */
+.btn-reset:hover {
+    background-color: #7f8c8d;
+    transform: translateY(-1px);
+}
+
+/* 说明文字 */
+.instruction {
+    font-size: 13px;
+    color: #95a5a6;
+}
+
+/* 工作区布局（地图+侧边栏） */
+.workspace {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    height: calc(100vh - 140px);
+}
+
+/* 地图容器 */
+#map-container {
+    flex: 1;
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+/* SVG地图元素 */
+#subway-map {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    cursor: grab;
+}
+
+/* 地图拖动时的光标 */
+#subway-map:active {
+    cursor: grabbing;
+}
+
+/* 路线面板 (侧边栏) */
+#route-panel {
+    width: 320px;
+    background: var(--panel-bg);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+/* 面板头部 */
+.panel-header {
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 面板标题 */
+.panel-header h2 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+/* 路线摘要区域 */
+#route-summary {
+    padding: 15px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 摘要卡片 */
+.summary-card {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* 摘要项 */
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* 总站数高亮 */
+.total-stations {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* 占位文本（无路线时显示） */
+.placeholder-text {
+    color: #95a5a6;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+/* 路线步骤列表容器 */
+#route-steps {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* 路线步骤时间轴项 */
+.step {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 20px;
+}
+
+/* 时间轴竖线 */
+.step::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 24px;
+    bottom: -24px;
+    width: 2px;
+    background-color: #e0e0e0;
+}
+
+/* 最后一个步骤不显示竖线 */
+.step:last-child::before {
+    display: none;
+}
+
+/* 步骤头部（线路名+站名） */
+.step-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+/* 线路徽章 */
+.line-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* 步骤内容详情 */
+.step-content {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* 站点名称 */
+.station-name {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* 站数统计 */
+.station-count {
+    color: #7f8c8d;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* SVG 线路路径 */
+.line-path {
+    fill: none;
+    stroke-width: 22; /* 增加线路宽度 */
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: opacity 0.3s;
+}
+
+/* 未选中线路变暗 */
+.line-path.dimmed {
+    opacity: 0.1;
+}
+
+/* 未选中站点变暗 */
+.station-group {
+    transition: opacity 0.3s;
+}
+.station-group.dimmed {
+    opacity: 0.2; /* 站点和文字一起变淡 */
+}
+
+/* 站点圆圈 */
+.station-circle {
+    fill: white;
+    stroke: #555;
+    stroke-width: 4;
+    cursor: pointer;
+    transition: all 0.2s;
+    r: 16;
+}
+
+/* 站点悬停效果 */
+.station-circle:hover {
+    r: 16;
+    stroke: var(--accent-color);
+    stroke-width: 4;
+}
+
+/* 换乘站样式 */
+.station-circle.transfer {
+    stroke-width: 2;
+    r: 16;
+    stroke: #333;
+}
+
+/* 选中的起点站 */
+.station-circle.selected-start {
+    fill: var(--success-color);
+    stroke: var(--success-color);
+    r: 18;
+}
+
+/* 选中的终点站 */
+.station-circle.selected-end {
+    fill: #e74c3c;
+    stroke: #e74c3c;
+    r: 18;
+}
+
+/* 站点名称标签 */
+.station-label {
+    font-size: 42px; /* 增加字体大小 */
+    fill: #333;
+    pointer-events: none;
+    user-select: none;
+    font-family: 'SimHei', 'Microsoft YaHei', sans-serif;
+    /* 使用 SVG stroke 代替 text-shadow 以解决缩放时的错位问题 */
+    stroke: #fff;
+    stroke-width: 6px;
+    paint-order: stroke;
+    stroke-linejoin: round;
+    font-weight: bold;
+}
+
+/* 路径高亮动画 */
+.path-highlight {
+    fill: none;
+    /* stroke: #f1c40f;  移除固定颜色，改由 JS 动态设置 */
+    stroke-width: 16; /* 稍微加宽一点，盖住底下的暗色线路 */
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* stroke-dasharray: 20; 移除虚线效果，改为实线 */
+    /* animation: dash 1s linear infinite; 移除流动动画 */
+    pointer-events: none;
+    opacity: 1; /* 不透明 */
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.3)); /* 添加一点阴影增加层次感 */
+}
+
+/* 路径方向箭头 */
+.path-arrow {
+    pointer-events: none;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+    animation: arrowMove 1.5s infinite ease-in-out; /* 添加移动动画 */
+}
+
+/* 箭头移动动画 */
+@keyframes arrowMove {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.8); /* 初始位置，稍微缩小 */
+    }
+    50% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1.2); /* 中间放大 */
+    }
+    100% {
+        opacity: 0;
+        transform: translate(10px, 0) scale(0.8); /* 向前移动并消失 */
+    }
+}
+
+/* 简单的淡入动画 (保留备用) */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 线路名称标签文本 */
+.line-label-text {
+    fill: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-anchor: middle;
+    /* dominant-baseline: central; 已移除，改用 dy 属性控制垂直居中 */
+    font-family: 'SimHei', 'Microsoft YaHei', sans-serif;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* 图例容器 */
+.legend {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+}
+
+/* 图例项 */
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+
+/* 图例圆点 */
+.legend-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #555;
+}
+
+/* 图例特定状态颜色 */
+.legend-circle.start { background: var(--success-color); border-color: var(--success-color); }
+.legend-circle.end { background: #e74c3c; border-color: #e74c3c; }
+.legend-circle.transfer { background: white; border-width: 3px; }
+
+/* 图例线条 */
+.legend-line.path {
+    width: 20px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 2px;
+}
+
+/* 滚动条整体样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    background: #bdc3c7;
+    border-radius: 4px;
+}
+
+/* 滚动条滑块悬停 */
+::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        height: auto;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .status-panel {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .status-item {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .button-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .button-group button {
+        flex: 1;
+    }
+
+    .workspace {
+        flex-direction: column;
+        height: auto;
+        gap: 15px;
+    }
+
+    #map-container {
+        height: 50vh;
+        min-height: 300px;
+    }
+
+    #route-panel {
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+    }
+
+    .legend {
+        bottom: 10px;
+        right: 10px;
+        padding: 5px;
+        transform: scale(0.8);
+        transform-origin: bottom right;
+    }
+}
+
+/* 强制禁止浏览器默认的触摸行为（如页面滚动、双指缩放页面），交给JS处理 */
+#subway-map {
+    touch-action: none;
+}
+
+/* 路径方向箭头 */
+.path-arrow {
+    pointer-events: none;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+/* 简单的淡入动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
